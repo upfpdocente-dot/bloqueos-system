@@ -3,3 +3,4 @@ Flask-SQLAlchemy==2.5.1
 SQLAlchemy==1.4.46
 Werkzeug==2.2.3
 python-dotenv==0.21.1
+gunicorn==21.2.0
