@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Reportes Gráficos</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Bloqueos por Departamento</h5>
+                                <canvas id="departamentoChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Bloqueos por Fecha</h5>
+                                <canvas id="fechaChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Top 10 Placas con más bloqueos</h5>
+                                <canvas id="placaChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Gráfico de departamentos
+    const deptCtx = document.getElementById('departamentoChart').getContext('2d');
+    const deptChart = new Chart(deptCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ departamentos|map(attribute='0')|list|tojson }},
+            datasets: [{
+                label: 'Bloqueos por Departamento',
+                data: {{ departamentos|map(attribute='1')|list|tojson }},
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Gráfico de fechas
+    const fechaCtx = document.getElementById('fechaChart').getContext('2d');
+    const fechaChart = new Chart(fechaCtx, {
+        type: 'line',
+        data: {
+            labels: {{ fechas|map(attribute='0')|list|tojson }},
+            datasets: [{
+                label: 'Bloqueos por Fecha',
+                data: {{ fechas|map(attribute='1')|list|tojson }},
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2,
+                tension: 0.1,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Gráfico de placas
+    const placaCtx = document.getElementById('placaChart').getContext('2d');
+    const placaChart = new Chart(placaCtx, {
+        type: 'doughnut',
+        data: {
+            labels: {{ placas|map(attribute='0')|list|tojson }},
+            datasets: [{
+                label: 'Bloqueos por Placa',
+                data: {{ placas|map(attribute='1')|list|tojson }},
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(153, 102, 255, 0.7)',
+                    'rgba(255, 159, 64, 0.7)',
+                    'rgba(199, 199, 199, 0.7)',
+                    'rgba(83, 102, 255, 0.7)',
+                    'rgba(40, 159, 64, 0.7)',
+                    'rgba(210, 99, 132, 0.7)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+</script>
+{% endblock %}

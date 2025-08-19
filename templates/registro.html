@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Registro de Bloqueo</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('registro') }}">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" id="fecha" name="fecha" required value="{{ now }}">
+                                <label for="fecha">Fecha</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="departamento" name="departamento" required>
+                                <label for="departamento">Departamento</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="placa" name="placa" required>
+                                <label for="placa">Placa</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="barcode" name="barcode" required>
+                                <label for="barcode">Barcode</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="pin" name="pin" required>
+                                <label for="pin">PIN</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <textarea class="form-control" id="motivo" name="motivo" style="height: 100px" required></textarea>
+                                <label for="motivo">Motivo de Bloqueo</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                <i class="fas fa-save me-2"></i>Guardar y Enviar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
